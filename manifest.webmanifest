@@ -1,0 +1,25 @@
+{
+  "name": "نور الإسلام | Noor Islam",
+  "short_name": "نور الإسلام",
+  "description": "القرآن والأذكار والمسبحة والأدعية والأحاديث ومواقيت الصلاة والقبلة.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fbf8f1",
+  "theme_color": "#0f4c3a",
+  "categories": ["lifestyle", "education"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "shortcuts": [
+    { "name": "القرآن الكريم", "url": "./#/quran" },
+    { "name": "المسبحة", "url": "./#/tasbeeh" },
+    { "name": "مواقيت الصلاة", "url": "./#/prayer" }
+  ]
+}
