@@ -20,9 +20,13 @@ const PAGES = {
     h('h3', null, 'خدمات خارجية'), h('p', null, 'عند الاستخدام يتصل متصفحك بالخدمات التالية، ولكل منها سياسته: AlQuran Cloud، AlAdhan، jsDelivr/GitHub، cdn.islamic.network (الصوت)، وخطوط Google. قد تظهر عناوين IP في سجلاتها.')],
   terms: () => [h('p', null, 'المحتوى مقدَّم للتذكير والتعلّم ولا يغني عن سؤال أهل العلم. لا نضمن خلو بيانات المصادر الخارجية من الخطأ، فراجع المصحف المطبوع والكتب المعتمدة عند الحاجة.'),
     h('p', null, 'لا يجوز استخدام الموقع لتعديل النص القرآني أو نسبة نصوص إلى النبي ﷺ دون توثيق. الدعاء عبادة وليس وعدًا بنتيجة معيّنة.'), h('p', null, 'لكل مصدر بيانات شروطه الخاصة (انظر «عن الموقع ومصادره»).')],
-  contact: () => CONFIG.contactEmail
-    ? [h('p', null, 'للملاحظات أو تصحيح الأخطاء راسلنا على: '), h('a', { href: `mailto:${CONFIG.contactEmail}` }, CONFIG.contactEmail)]
-    : [notice('وسيلة التواصل غير مهيأة بعد. ضع بريدك في config.js (contactEmail) قبل النشر؛ لم نضع بريدًا وهميًا.')]
+  contact: () => {
+    const rows = [];
+    if (CONFIG.contactEmail) rows.push(h('p', null, 'البريد الإلكتروني: ', h('a', { href: `mailto:${CONFIG.contactEmail}` }, CONFIG.contactEmail)));
+    if (CONFIG.contactPhone) rows.push(h('p', null, 'الهاتف: ', h('a', { href: `tel:${CONFIG.contactPhoneIntl || CONFIG.contactPhone}`, dir: 'ltr' }, CONFIG.contactPhone)));
+    if (!rows.length) return [notice('وسيلة التواصل غير مهيأة بعد. ضع بيانات التواصل في config.js قبل النشر؛ لم نضع بيانات وهمية.')];
+    return [h('p', null, 'للملاحظات أو الاقتراحات أو الإبلاغ عن خطأ في المحتوى تواصل معنا:'), ...rows];
+  }
 };
 const TITLES = { about: 'عن الموقع ومصادره', privacy: 'سياسة الخصوصية', terms: 'شروط الاستخدام', contact: 'تواصل معنا' };
 
