@@ -60,7 +60,7 @@ async function route() {
   const def = ROUTES[name] || ROUTES[''];
   const key = ROUTES[name] ? name : '';
   markActive(key);
-  document.title = key ? `${def.title} | نور الإسلام` : 'نور الإسلام | Noor Islam';
+  document.title = key ? `${def.title} | تطبيق القرآن الكريم والأحاديث الشريفة` : 'تطبيق القرآن الكريم والأحاديث الشريفة';
   app.setAttribute('aria-busy', 'true');
   app.replaceChildren(loading());
   try {

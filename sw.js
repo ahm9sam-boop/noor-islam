@@ -1,9 +1,9 @@
-// Service Worker — نور الإسلام
+// Service Worker — تطبيق القرآن الكريم والأحاديث الشريفة
 // - الملفات الأساسية: تُخزَّن عند التثبيت وتُخدم من الكاش (cache-first) مع تحديث بالخلفية.
 // - بيانات الـ API: stale-while-revalidate لطلبات GET فقط (القرآن/الأحاديث/الأذكار/المواقيت).
 // - الصوت لا يُخزَّن (طلبات Range وحقوق الاستخدام).
 // - عند فشل التنقل: صفحة offline.html.
-const VERSION = 'v2';
+const VERSION = 'v3';
 const SHELL = `noor-shell-${VERSION}`;
 const DATA = `noor-data-${VERSION}`;
 const FONTS = `noor-fonts-${VERSION}`;
@@ -14,9 +14,9 @@ const SHELL_FILES = [
   'offline.html',
   'manifest.webmanifest',
   'styles.css',
-  'icon.svg',
   'icon-192.png',
   'icon-512.png',
+  'icon-maskable-512.png',
   'apple-touch-icon.png',
   'config.js',
   'lib-api.js',

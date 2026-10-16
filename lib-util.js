@@ -117,7 +117,7 @@ export async function copyText(text) {
   }
   toast('تم النسخ');
 }
-export async function shareText(text, title = 'نور الإسلام') {
+export async function shareText(text, title = 'تطبيق القرآن الكريم والأحاديث الشريفة') {
   if (navigator.share) {
     try { await navigator.share({ title, text }); return; } catch (e) { if (e.name === 'AbortError') return; }
   }

@@ -11,7 +11,7 @@ const SOURCES = [
   ['التقويم الهجري', 'Intl في المتصفح (تقويم أم القرى)', 'حسابي وليس رؤية.']
 ];
 const PAGES = {
-  about: () => [h('p', null, 'نور الإسلام تطبيق ويب عربي يجمع القرآن والأذكار والمسبحة والأدعية والأحاديث ومواقيت الصلاة والقبلة، ويعمل بلا حساب.'),
+  about: () => [h('p', null, 'تطبيق القرآن الكريم والأحاديث الشريفة تطبيق ويب عربي يجمع القرآن والأذكار والمسبحة والأدعية والأحاديث ومواقيت الصلاة والقبلة، ويعمل بلا حساب.'),
     h('h2', null, 'مصادر البيانات'), ...SOURCES.map(([t, s, n]) => h('div', { class: 'card' }, h('h3', null, t), h('p', null, s), h('p', { class: 'muted small' }, n))),
     notice('لا يحتوي الموقع على نصوص شرعية مكتوبة يدويًا، باستثناء العناوين وعبارات عامة موسومة «معلومات عامة». وإذا تعذّر الوصول لمصدر عرضنا رسالة بدل محتوى غير موثّق.'),
     h('h2', null, 'ما يعمل دون إنترنت'), h('ul', null, h('li', null, 'واجهة الموقع والمسبحة والتقويم الهجري (حسابيًا) والمفضلة والإعدادات.'), h('li', null, 'القرآن بعد تنزيل المصحف من صفحة القرآن، والأحاديث بعد تنزيل الكتب، والأذكار بعد أول تحميل.'), h('li', null, 'التلاوة والتفسير والترجمات ومواقيت مدن جديدة تحتاج إنترنت.'))],
@@ -24,6 +24,7 @@ const PAGES = {
     const rows = [];
     if (CONFIG.contactEmail) rows.push(h('p', null, 'البريد الإلكتروني: ', h('a', { href: `mailto:${CONFIG.contactEmail}` }, CONFIG.contactEmail)));
     if (CONFIG.contactPhone) rows.push(h('p', null, 'الهاتف: ', h('a', { href: `tel:${CONFIG.contactPhoneIntl || CONFIG.contactPhone}`, dir: 'ltr' }, CONFIG.contactPhone)));
+    if (CONFIG.developerName) rows.push(h('p', null, 'المبرمج: ', h('b', null, CONFIG.developerName)));
     if (!rows.length) return [notice('وسيلة التواصل غير مهيأة بعد. ضع بيانات التواصل في config.js قبل النشر؛ لم نضع بيانات وهمية.')];
     return [h('p', null, 'للملاحظات أو الاقتراحات أو الإبلاغ عن خطأ في المحتوى تواصل معنا:'), ...rows];
   }
