@@ -21,6 +21,7 @@ export const ROUTES = {
   learn: { title: 'تعلّم', mod: './page-learn.js', icon: 'learn' },
   search: { title: 'البحث', mod: './page-search.js', icon: 'search', hidden: true },
   favorites: { title: 'المفضلة', mod: './page-favorites.js', icon: 'heart' },
+  share: { title: 'شارك التطبيق', mod: './page-share.js', icon: 'share' },
   settings: { title: 'الإعدادات', mod: './page-settings.js', icon: 'settings', hidden: true },
   more: { title: 'المزيد', mod: './page-more.js', icon: 'menu', hidden: true },
   about: { title: 'عن الموقع ومصادره', mod: './page-info.js', icon: 'info', hidden: true },
@@ -60,7 +61,7 @@ async function route() {
   const def = ROUTES[name] || ROUTES[''];
   const key = ROUTES[name] ? name : '';
   markActive(key);
-  document.title = key ? `${def.title} | تطبيق القرآن الكريم والأحاديث الشريفة` : 'تطبيق القرآن الكريم والأحاديث الشريفة';
+  document.title = key ? `${def.title} | نور الإسلام` : 'نور الإسلام | Noor Islam';
   app.setAttribute('aria-busy', 'true');
   app.replaceChildren(loading());
   try {
@@ -98,6 +99,12 @@ export const canInstall = () => !!installEvt;
 export async function install() { if (!installEvt) return false; installEvt.prompt(); const r = await installEvt.userChoice; installEvt = null; return r.outcome === 'accepted'; }
 
 if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  const hadController = !!navigator.serviceWorker.controller;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (!hadController || document.getElementById('update-bar')) return;
+    document.body.append(h('div', { id: 'update-bar', class: 'update-bar', role: 'alert' }, h('span', null, 'تحديث جديد للتطبيق جاهز.'),
+      h('button', { class: 'btn gold', type: 'button', onclick: () => location.reload() }, 'إعادة التشغيل الآن')));
+  });
   addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch((e) => console.warn('SW:', e)));
 }
 

@@ -1,4 +1,4 @@
-// Service Worker — تطبيق القرآن الكريم والأحاديث الشريفة
+// Service Worker — نور الإسلام
 // - الملفات الأساسية: تُخزَّن عند التثبيت وتُخدم من الكاش (cache-first) مع تحديث بالخلفية.
 // - بيانات الـ API: stale-while-revalidate لطلبات GET فقط (القرآن/الأحاديث/الأذكار/المواقيت).
 // - الصوت لا يُخزَّن (طلبات Range وحقوق الاستخدام).
@@ -14,9 +14,9 @@ const SHELL_FILES = [
   'offline.html',
   'manifest.webmanifest',
   'styles.css',
+  'icon.svg',
   'icon-192.png',
   'icon-512.png',
-  'icon-maskable-512.png',
   'apple-touch-icon.png',
   'config.js',
   'lib-api.js',
@@ -44,12 +44,13 @@ const SHELL_FILES = [
   'page-ramadan.js',
   'page-search.js',
   'page-settings.js',
+  'page-share.js',
   'page-tasbeeh.js'
 ];
 const API_HOSTS = ['api.alquran.cloud', 'api.aladhan.com', 'cdn.jsdelivr.net', 'raw.githubusercontent.com', 'api.islamic.app'];
 
 self.addEventListener('install', (e) => {
-  e.waitUntil(caches.open(SHELL).then((c) => c.addAll(SHELL_FILES)).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(SHELL).then((c) => c.addAll(SHELL_FILES.map((u) => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', (e) => {
   e.waitUntil((async () => {
