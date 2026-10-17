@@ -1,4 +1,4 @@
-/* نور الإسلام — الهوية: أخضر داكن + ذهبي + عاجي */
+/* تطبيق القرآن الكريم والأحاديث الشريفة — الهوية: أخضر داكن + ذهبي + عاجي */
 :root {
   --green: #0f4c3a; --green-2: #0a3528; --green-3: #1d6b52;
   --gold: #b88a2c; --gold-soft: #f1e6c6; --gold-line: #d8bb73;
@@ -30,10 +30,12 @@ h1 { font-size: 1.9rem; } h2 { font-size: 1.4rem; } h3 { font-size: 1.15rem; }
 
 /* الشريط العلوي */
 .topbar { position: sticky; top: 0; z-index: 40; display: flex; align-items: center; gap: 12px; padding: 8px 14px; background: var(--green); color: var(--on-green); background-image: var(--pattern); }
-.brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; flex: none; }
-.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
-.brand-text b { font-family: var(--serif); font-size: 1.35rem; } .brand-text small { opacity: .8; font-size: .7rem; letter-spacing: .08em; }
-.search { position: relative; flex: 1; max-width: 560px; margin-inline: auto; }
+.brand { display: flex; align-items: center; gap: 10px; color: inherit; text-decoration: none; flex: 0 1 auto; min-width: 0; }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; }
+.brand-text b { font-family: var(--serif); font-size: .95rem; line-height: 1.3; } .brand-text small { opacity: .8; font-size: .7rem; letter-spacing: .08em; }
+.search { position: relative; flex: 1 1 0; min-width: 0; max-width: 560px; margin-inline: auto; }
+.brand img { flex: none; }
+@media (max-width: 600px) { .topbar { gap: 8px; padding: 8px 10px; } .brand-text b { font-size: .8rem; } .search { flex-basis: 90px; } }
 .search input { width: 100%; border: 0; border-radius: 999px; padding: 8px 40px 8px 14px; background: rgba(255,255,255,.95); color: #15231e; }
 .search-icon { position: absolute; inset-inline-start: auto; right: 14px; top: 50%; transform: translateY(-50%); color: #4a5a53; display: flex; pointer-events: none; }
 .top-actions { display: flex; gap: 4px; margin-inline-start: auto; }
@@ -181,8 +183,3 @@ table.t { width: 100%; border-collapse: collapse; background: var(--surface); bo
 @media (min-width: 900px) { .footer { padding-bottom: 24px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media print { .topbar, .bottom-nav, .side-nav, .player, .footer { display: none; } }
-
-.update-bar { position: fixed; inset-inline: 10px; bottom: 84px; z-index: 120; background: var(--green-2); color: #fff; border-radius: 14px; padding: 10px 14px; display: flex; gap: 10px; align-items: center; justify-content: space-between; box-shadow: 0 6px 24px rgba(0,0,0,.35); }
-@media (min-width: 900px) { .update-bar { inset-inline: auto 24px; bottom: 20px; width: 420px; } }
-.notice.warn { background: #fde8e4; border-color: #e6a99d; color: #5b1d12; }
-ul { padding-inline-start: 22px; }
