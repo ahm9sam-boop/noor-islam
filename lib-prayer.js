@@ -1,7 +1,7 @@
 // منطق مواقيت الصلاة المشترك (الصفحة الرئيسية، الصلاة، رمضان).
 import { settings, setSetting } from './lib-settings.js';
 import { cached, getTimings, hmToSec } from './lib-api.js';
-import { dmy, toAr, pad2 } from './lib-util.js';
+import { dmy, toAr, pad2, h } from './lib-util.js';
 
 export const PRAYER_LIST = [['Fajr', 'الفجر'], ['Sunrise', 'الشروق'], ['Dhuhr', 'الظهر'], ['Asr', 'العصر'], ['Maghrib', 'المغرب'], ['Isha', 'العشاء']];
 const FIVE = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
@@ -56,3 +56,48 @@ export function askLocation() {
 export const savePlace = (p) => setSetting('place', p);
 
 export const METHOD_AR = { 1: 'جامعة العلوم الإسلامية بكراتشي', 2: 'الجمعية الإسلامية لأمريكا الشمالية (ISNA)', 3: 'رابطة العالم الإسلامي', 4: 'جامعة أم القرى بمكة المكرمة', 5: 'الهيئة المصرية العامة للمساحة' };
+
+/** مدن مصر المتاحة في قائمة الاختيار (القاهرة هي الافتراضية). */
+export const CITIES = [
+  { n: 'القاهرة', lat: 30.0444, lng: 31.2357 },
+  { n: 'الإسكندرية', lat: 31.2001, lng: 29.9187 },
+  { n: 'الجيزة', lat: 30.0131, lng: 31.2089 },
+  { n: 'الزقازيق', lat: 30.5877, lng: 31.502 },
+  { n: 'فاقوس', lat: 30.7283, lng: 31.7961 },
+  { n: 'بنها', lat: 30.466, lng: 31.1848 },
+  { n: 'المنصورة', lat: 31.0409, lng: 31.3785 },
+  { n: 'طنطا', lat: 30.7865, lng: 31.0004 },
+  { n: 'دمنهور', lat: 31.0341, lng: 30.4682 },
+  { n: 'كفر الشيخ', lat: 31.1107, lng: 30.9388 },
+  { n: 'شبين الكوم', lat: 30.553, lng: 31.01 },
+  { n: 'دمياط', lat: 31.4165, lng: 31.8133 },
+  { n: 'بورسعيد', lat: 31.2653, lng: 32.3019 },
+  { n: 'الإسماعيلية', lat: 30.5965, lng: 32.2715 },
+  { n: 'السويس', lat: 29.9668, lng: 32.5498 },
+  { n: 'العريش', lat: 31.1316, lng: 33.7984 },
+  { n: 'مرسى مطروح', lat: 31.3543, lng: 27.2373 },
+  { n: 'الفيوم', lat: 29.3084, lng: 30.8428 },
+  { n: 'بني سويف', lat: 29.0661, lng: 31.0994 },
+  { n: 'المنيا', lat: 28.1099, lng: 30.7503 },
+  { n: 'أسيوط', lat: 27.1783, lng: 31.1859 },
+  { n: 'سوهاج', lat: 26.5591, lng: 31.6948 },
+  { n: 'قنا', lat: 26.1551, lng: 32.716 },
+  { n: 'الأقصر', lat: 25.6872, lng: 32.6396 },
+  { n: 'أسوان', lat: 24.0889, lng: 32.8998 },
+  { n: 'الغردقة', lat: 27.2579, lng: 33.8116 },
+  { n: 'شرم الشيخ', lat: 27.9158, lng: 34.33 }
+];
+export const DEFAULT_PLACE = { lat: 30.0444, lng: 31.2357, label: 'القاهرة، مصر', tz: 'Africa/Cairo' };
+export function citySelect(onChange) {
+  const cur = settings.place;
+  const match = CITIES.find((x) => cur && cur.lat != null && Math.abs(cur.lat - x.lat) < 0.001 && Math.abs(cur.lng - x.lng) < 0.001);
+  const sel = h('select', { 'aria-label': 'المدينة', onchange: () => {
+    const x = CITIES.find((y) => y.n === sel.value);
+    if (!x) return;
+    savePlace({ lat: x.lat, lng: x.lng, label: `${x.n}، مصر`, tz: 'Africa/Cairo' });
+    onChange?.();
+  } });
+  if (!match) sel.append(h('option', { value: '', selected: true }, cur ? placeLabel(cur) : 'اختر مدينتك'));
+  CITIES.forEach((x) => sel.append(h('option', { value: x.n, selected: match === x }, x.n)));
+  return sel;
+}

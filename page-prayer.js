@@ -4,7 +4,7 @@ import { settings, setSetting } from './lib-settings.js';
 import { errorBox, loading, notice, pageHeader, chips } from './lib-ui.js';
 import { toast } from './lib-util.js';
 import { cached, getTimings, getMonthTimings, prayerMethods } from './lib-api.js';
-import { PRAYER_LIST, fmt12, fmtDur, nextPrayer, secsOf, askLocation, savePlace, placeLabel, placeKey, METHOD_AR } from './lib-prayer.js';
+import { PRAYER_LIST, fmt12, fmtDur, nextPrayer, secsOf, askLocation, savePlace, placeLabel, placeKey, METHOD_AR, citySelect } from './lib-prayer.js';
 
 export async function render() {
   const root = h('div', null, pageHeader('مواقيت الصلاة', 'تُحسب من خدمة AlAdhan حسب مدينتك وطريقة الحساب التي تختارها'));
@@ -33,7 +33,7 @@ export async function render() {
   const schoolSel = h('select', { 'aria-label': 'المذهب لحساب العصر', onchange: () => { setSetting('school', +schoolSel.value); draw(); } },
     h('option', { value: 0, selected: settings.school === 0 }, 'العصر: الجمهور (ظل المثل)'), h('option', { value: 1, selected: settings.school === 1 }, 'العصر: الحنفي (ظل المثلين)'));
   const tabs = chips([['day', 'اليوم'], ['month', 'تقويم الشهر']], view, (v) => { view = v; draw(); }, 'العرض');
-  root.append(form, h('div', { class: 'row' }, methodSel, schoolSel), tabs, out,
+  root.append(h('div', { class: 'row' }, citySelect(() => draw())), form, h('div', { class: 'row' }, methodSel, schoolSel), tabs, out,
     notice('تختلف المواقيت بين الهيئات وطرق الحساب بفروق دقائق؛ اعتمد ما تعتمده دار الإفتاء أو المسجد في بلدك. لا تُعرض مواقيت ثابتة؛ كل الأرقام محسوبة لمكانك.'));
 
   async function draw() {

@@ -270,7 +270,7 @@ async function a(path) {
 }
 function locQuery(place) {
   return place.lat != null && place.lng != null
-    ? { coords: true, qs: `latitude=${place.lat}&longitude=${place.lng}` }
+    ? { coords: true, qs: `latitude=${place.lat}&longitude=${place.lng}${place.tz ? `&timezonestring=${encodeURIComponent(place.tz)}` : ''}` }
     : { coords: false, qs: `city=${encodeURIComponent(place.city)}&country=${encodeURIComponent(place.country)}` };
 }
 export async function getTimings(place, dmyStr, method, school) {

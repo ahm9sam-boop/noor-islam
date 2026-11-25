@@ -4,6 +4,7 @@ import { ls, idb } from './lib-store.js';
 import { chips, notice, pageHeader } from './lib-ui.js';
 import { canInstall, install } from './main.js';
 import { clearMemCache } from './lib-api.js';
+import { citySelect } from './lib-prayer.js';
 
 export function render() {
   const root = h('div', null, pageHeader('الإعدادات', 'تُحفظ على هذا الجهاز فقط'));
@@ -18,6 +19,8 @@ export function render() {
     })(),
     h('div', { class: 'row' }, h('label', { for: 'scale' }, 'حجم الواجهة: '),
       h('input', { id: 'scale', type: 'range', min: 0.85, max: 1.5, step: 0.05, value: settings.scale, oninput: (e) => setSetting('scale', +e.target.value) }))));
+  root.append(h('div', { class: 'card' }, h('h3', null, 'المدينة (لمواقيت الصلاة والقبلة)'), citySelect(() => toast('تم تغيير المدينة')),
+    h('p', { class: 'muted small' }, 'الافتراضي القاهرة. لمدينة غير موجودة استخدم صفحة مواقيت الصلاة.')));
   root.append(h('div', { class: 'card' }, h('h3', null, 'المسبحة'),
     h('label', null, h('input', { type: 'checkbox', checked: settings.haptic, onchange: (e) => setSetting('haptic', e.target.checked) }), ' اهتزاز عند الضغط'), h('br'),
     h('label', null, h('input', { type: 'checkbox', checked: settings.sound, onchange: (e) => setSetting('sound', e.target.checked) }), ' صوت خفيف')));

@@ -81,5 +81,6 @@ export function render() {
     h('div', { class: 'card' }, h('h3', null, 'إن لم تعمل البوصلة'),
       h('p', null, 'استخدم الدرجة المكتوبة أعلاه مع بوصلة الهاتف المدمجة (تطبيق البوصلة)، أو اسأل أهل المنطقة أو المسجد القريب عن اتجاه القبلة.')),
     notice('دقة البوصلة تعتمد على حساسات جهازك ومحيطك، وقد تختلف عدة درجات. في المسجد اتبع المحراب المعتمد، وعند الشك فاجتهد في تحري الجهة.'));
+  if (settings.place?.lat != null) show(settings.place.lat, settings.place.lng, settings.place.label || 'مدينتك');
   return { node: root, dispose: () => { removeEventListener('deviceorientationabsolute', onOrient, true); removeEventListener('deviceorientation', onOrient, true); } };
 }

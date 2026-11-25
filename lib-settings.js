@@ -20,6 +20,7 @@ const DEFAULTS = {
 };
 
 export const settings = { ...DEFAULTS, ...(ls.get('settings', {}) || {}) };
+if (!settings.place) settings.place = { lat: 30.0444, lng: 31.2357, label: 'القاهرة، مصر', tz: 'Africa/Cairo' }; // الافتراضي: القاهرة
 
 export function applySettings() {
   const r = document.documentElement;
