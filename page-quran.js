@@ -105,6 +105,7 @@ async function offlineCard() {
   const btn = h('button', { class: 'btn', type: 'button' });
   const paint = async () => {
     const m = await api.quranOfflineMeta();
+    if (!m && await api.quranBundled()) { status.textContent = 'المصحف مضمّن في التطبيق ويعمل دون إنترنت. الصوت والتفسير والترجمة تحتاج إنترنت.'; btn.hidden = true; return; }
     status.textContent = m ? `المصحف محفوظ على جهازك (${toAr(m.ayahs)} آية). النص يعمل دون اتصال؛ الصوت والتفسير والترجمة يحتاجان إنترنت.` : 'نزّل نص المصحف كاملًا (حجمه نحو ١–٢ ميجابايت) ليعمل القرآن والبحث دون إنترنت.';
     btn.replaceChildren(icon(m ? 'trash' : 'download', 18), m ? 'حذف النسخة المحفوظة' : 'تنزيل المصحف');
     btn.onclick = async () => {

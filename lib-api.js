@@ -10,7 +10,7 @@ import { normAr } from './lib-util.js';
 export const Q = 'https://api.alquran.cloud/v1';
 export const A = 'https://api.aladhan.com/v1';
 const HADITH_BASES = ['https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1', 'https://raw.githubusercontent.com/fawazahmed0/hadith-api/1'];
-const ADHKAR_URLS = ['https://cdn.jsdelivr.net/gh/rn0x/Adhkar-json@main/adhkar.json', 'https://raw.githubusercontent.com/rn0x/Adhkar-json/main/adhkar.json'];
+const ADHKAR_URLS = ['adhkar-data.json', 'https://cdn.jsdelivr.net/gh/rn0x/Adhkar-json@main/adhkar.json', 'https://raw.githubusercontent.com/rn0x/Adhkar-json/main/adhkar.json'];
 const NAMES_URLS = [`${A}/asmaAlHusna`, 'https://api.islamic.app/v1/asma-al-husna'];
 
 export async function getJSON(url, { timeout = 20000 } = {}) {
@@ -54,13 +54,23 @@ async function q(path) {
 }
 
 export const surahList = () => cached('q:surahs', async () => {
-  const d = await q('/surah');
+  let d;
+  const b = await bundledQuran();
+  if (b) d = b.surahs.map((s) => ({ number: s.number, name: s.name, englishName: s.englishName, revelationType: s.revelationType, numberOfAyahs: s.ayahs.length }));
+  else d = await q('/surah');
   if (!Array.isArray(d) || d.length !== 114) throw new Error('قائمة السور غير مكتملة');
   return d;
 });
 
 export const quranOfflineMeta = async () => (await idb.get('q:full'))?.meta || null;
-async function fullQuran() { return (await idb.get('q:full'))?.v || null; }
+let bundled = null;
+async function bundledQuran() {
+  if (bundled) return bundled;
+  try { const j = await getJSON('quran-data.json', { timeout: 30000 }); if (j.surahs?.length === 114) bundled = j; } catch { /* غير متوفر */ }
+  return bundled;
+}
+export const quranBundled = async () => !!(await bundledQuran());
+async function fullQuran() { return (await idb.get('q:full'))?.v || (await bundledQuran()); }
 
 function checkSequence(ayahs, meta) {
   if (!Array.isArray(ayahs) || !ayahs.length) throw new Error('لا توجد آيات');
@@ -102,6 +112,9 @@ export async function getPage(p) {
 
 export async function getAyah(ref, edition = 'quran-uthmani') {
   const full = edition === 'quran-uthmani' && (await fullQuran());
+  if (full && /^\d+$/.test(String(ref))) {
+    for (const sr of full.surahs) for (const ay of sr.ayahs) if (ay.number === +ref) return { ...ay, surah: { number: sr.number, name: sr.name } };
+  }
   if (full && String(ref).includes(':')) {
     const [s, a] = String(ref).split(':').map(Number);
     const sur = full.surahs.find((x) => x.number === s);

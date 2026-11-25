@@ -3,7 +3,7 @@
 // - بيانات الـ API: stale-while-revalidate لطلبات GET فقط (القرآن/الأحاديث/الأذكار/المواقيت).
 // - الصوت لا يُخزَّن (طلبات Range وحقوق الاستخدام).
 // - عند فشل التنقل: صفحة offline.html.
-const VERSION = 'v6';
+const VERSION = 'v8';
 const SHELL = `noor-shell-${VERSION}`;
 const DATA = `noor-data-${VERSION}`;
 const FONTS = `noor-fonts-${VERSION}`;
@@ -21,8 +21,20 @@ const SHELL_FILES = [
   'config.js',
   'lib-api.js',
   'lib-favorites.js',
+  'fonts.css',
+  'font-Amiri-400.ttf',
+  'font-Amiri-700.ttf',
+  'font-AmiriQuran-400.ttf',
+  'font-Cairo-400.ttf',
+  'font-Cairo-600.ttf',
+  'font-Cairo-700.ttf',
+  'font-ScheherazadeNew-400.ttf',
+  'quran-data.json',
+  'adhkar-data.json',
   'lib-native.js',
   'data-seerah.js',
+  'data-faq.js',
+  'page-faq.js',
   'data-qisas.js',
   'page-seerah.js',
   'page-qisas.js',

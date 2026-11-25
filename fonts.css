@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(font-Amiri-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(font-Amiri-700.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Amiri Quran';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(font-AmiriQuran-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(font-Cairo-400.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(font-Cairo-600.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Cairo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(font-Cairo-700.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'Scheherazade New';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(font-ScheherazadeNew-400.ttf) format('truetype');
+}

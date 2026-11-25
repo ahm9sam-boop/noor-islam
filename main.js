@@ -26,6 +26,7 @@ export const ROUTES = {
   salah: { title: 'تعلّم الصلاة', mod: './page-learn.js', icon: 'prayer' },
   fasting: { title: 'أحكام الصيام', mod: './page-learn.js', icon: 'learn' },
   qa: { title: 'أسئلة وأجوبة', mod: './page-learn.js', icon: 'info' },
+  faq: { title: 'أسئلة دينية', mod: './page-faq.js', icon: 'info' },
   learn: { title: 'تعلّم', mod: './page-learn.js', icon: 'learn' },
   search: { title: 'البحث', mod: './page-search.js', icon: 'search', hidden: true },
   favorites: { title: 'المفضلة', mod: './page-favorites.js', icon: 'heart' },
@@ -37,6 +38,8 @@ export const ROUTES = {
   terms: { title: 'شروط الاستخدام', mod: './page-info.js', icon: 'info', hidden: true },
   contact: { title: 'تواصل معنا', mod: './page-info.js', icon: 'info', hidden: true }
 };
+// أقسام الجانب الأونلاين: تحتاج اتصالًا بالإنترنت (وتظهر فيها الإعلانات). باقي الأقسام تعمل دون إنترنت.
+const ONLINE = new Set(['seerah', 'qisas', 'pillars', 'iman', 'wudu', 'salah', 'fasting', 'qa', 'learn', 'faq', 'hadith']);
 const BOTTOM = ['', 'quran', 'azkar', 'tasbeeh', 'more'];
 const app = $('#app');
 let dispose = null;
@@ -70,6 +73,13 @@ async function route() {
   const key = ROUTES[name] ? name : '';
   markActive(key);
   document.title = key ? `${def.title} | نور الإسلام` : 'نور الإسلام | Noor Islam';
+  if (ONLINE.has(key)) {
+    if (!navigator.onLine) {
+      app.replaceChildren(h('div', { class: 'card' }, h('h2', null, def.title), h('p', { class: 'prose' }, 'هذا القسم يحتاج اتصالًا بالإنترنت. اتصل بالإنترنت ثم حاول مرة أخرى. أقسام القرآن والأذكار والأدعية والمسبحة والقبلة ومواقيت الصلاة تعمل دون إنترنت.'), h('button', { class: 'btn gold', type: 'button', onclick: () => route() }, 'إعادة المحاولة')));
+      return;
+    }
+    try { window.NoorNative?.onlineSection?.(); } catch { /* ignore */ }
+  }
   app.setAttribute('aria-busy', 'true');
   app.replaceChildren(loading());
   try {
