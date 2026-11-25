@@ -1,9 +1,9 @@
 /* تطبيق القرآن الكريم والأحاديث الشريفة — الهوية: أخضر داكن + ذهبي + عاجي */
 :root {
-  --green: #0f4c3a; --green-2: #0a3528; --green-3: #1d6b52;
-  --gold: #b88a2c; --gold-soft: #f1e6c6; --gold-line: #d8bb73;
-  --bg: #f6f2e8; --surface: #fffdf8; --surface-2: #efe9d9;
-  --ink: #15231e; --muted: #5b6b64; --line: #ddd5bf;
+  --green: #6b3f23; --green-2: #4a2a15; --green-3: #8a5632;
+  --gold: #c58a2c; --gold-soft: #f8ecd6; --gold-line: #d9b77a;
+  --bg: #faf3e6; --surface: #fffaf0; --surface-2: #f1e4cc;
+  --ink: #15231e; --muted: #5b6b64; --line: #e3d2b3;
   --on-green: #ffffff; --danger: #a33a2a; --ok: #2f7d5a;
   --qfs: 30px; --qfont: 'Amiri Quran', 'Scheherazade New', serif;
   --ui: 'Cairo', 'Segoe UI', Tahoma, sans-serif; --serif: 'Amiri', 'Scheherazade New', serif;
@@ -183,3 +183,13 @@ table.t { width: 100%; border-collapse: collapse; background: var(--surface); bo
 @media (min-width: 900px) { .footer { padding-bottom: 24px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 @media print { .topbar, .bottom-nav, .side-nav, .player, .footer { display: none; } }
+
+/* palettes */
+[data-palette='green'] { --green: #0f4c3a; --green-2: #0a3528; --green-3: #1d6b52; --gold: #b88a2c; --gold-soft: #f1e6c6; --gold-line: #d8bb73; --bg: #f6f2e8; --surface: #fffdf8; --surface-2: #efe9d9; --line: #ddd5bf; }
+[data-palette='blue'] { --green: #14407a; --green-2: #0c2a52; --green-3: #2563b0; --gold: #c9a24a; --gold-soft: #eef3fb; --gold-line: #9db7dc; --bg: #f2f6fb; --surface: #ffffff; --surface-2: #e4ecf7; --line: #cfdbec; }
+[data-palette='purple'] { --green: #4a2a73; --green-2: #341b55; --green-3: #6b3fa0; --gold: #d4a73a; --gold-soft: #f3ecfa; --gold-line: #cdb3e6; --bg: #f7f3fb; --surface: #fffdff; --surface-2: #ece3f5; --line: #ddd0ea; }
+[data-theme='dark'][data-palette='night'] { --green: #0d1b3a; --green-2: #08122a; --green-3: #e0b65a; --gold: #e0b65a; --gold-soft: #1a2340; --gold-line: #6b5524; --bg: #0a1020; --surface: #121b33; --surface-2: #18223f; --ink: #eef1f8; --muted: #a3adc7; --line: #26335a; }
+.palette-row { display: flex; gap: .6rem; flex-wrap: wrap; margin: .5rem 0 1rem; }
+.swatch { width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 3px solid var(--line); cursor: pointer; padding: 0; }
+.swatch[aria-pressed='true'] { border-color: var(--ink); box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--gold); }
+.swatch[data-k='brown'] { background: #6b3f23; } .swatch[data-k='green'] { background: #0f4c3a; } .swatch[data-k='blue'] { background: #14407a; } .swatch[data-k='purple'] { background: #4a2a73; } .swatch[data-k='night'] { background: #0a1020; }

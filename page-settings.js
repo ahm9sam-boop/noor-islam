@@ -8,7 +8,14 @@ import { clearMemCache } from './lib-api.js';
 export function render() {
   const root = h('div', null, pageHeader('الإعدادات', 'تُحفظ على هذا الجهاز فقط'));
   root.append(h('div', { class: 'card' }, h('h3', null, 'المظهر'),
-    chips([['auto', 'تلقائي'], ['light', 'نهاري'], ['dark', 'ليلي']], settings.theme, (v) => setSetting('theme', v), 'المظهر'),
+    (() => {
+      const cols = { brown: '#6b3f23', green: '#0f4c3a', blue: '#14407a', purple: '#4a2a73', night: '#0a1020' };
+      const names = { brown: 'بني', green: 'أخضر', blue: 'أزرق', purple: 'بنفسجي', night: 'ليلي' };
+      const row = h('div', { class: 'palette-row', role: 'group', 'aria-label': 'لون التطبيق' });
+      const paint = () => row.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.k === settings.palette)));
+      Object.keys(cols).forEach((k) => row.append(h('button', { type: 'button', class: 'swatch', 'data-k': k, title: names[k], 'aria-label': names[k], style: `background:${cols[k]}`, onclick: () => { setSetting('palette', k); paint(); } })));
+      paint(); return row;
+    })(),
     h('div', { class: 'row' }, h('label', { for: 'scale' }, 'حجم الواجهة: '),
       h('input', { id: 'scale', type: 'range', min: 0.85, max: 1.5, step: 0.05, value: settings.scale, oninput: (e) => setSetting('scale', +e.target.value) }))));
   root.append(h('div', { class: 'card' }, h('h3', null, 'المسبحة'),
@@ -29,6 +36,6 @@ export function render() {
       try { for (const k of await caches.keys()) if (k.startsWith('noor-data')) await caches.delete(k); } catch { /* ignore */ }
       toast('تم حذف البيانات'); setTimeout(() => location.reload(), 600);
     } }, 'حذف كل بياناتي من هذا الجهاز'))));
-  root.append(notice('لا يوجد حساب ولا تتبّع. كل ما تحفظه يبقى في متصفحك.'));
+  root.append(notice('لا يوجد حساب. كل ما تحفظه يبقى في متصفحك.'));
   return root;
 }

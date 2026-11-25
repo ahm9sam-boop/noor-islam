@@ -87,7 +87,7 @@ function buildHeader() {
   });
   const themeBtn = $('#theme-btn');
   const paint = () => { const dark = document.documentElement.dataset.theme === 'dark'; themeBtn.replaceChildren(icon(dark ? 'sun' : 'moon', 20)); themeBtn.setAttribute('aria-label', dark ? 'الوضع النهاري' : 'الوضع الليلي'); };
-  themeBtn.addEventListener('click', () => { const dark = document.documentElement.dataset.theme === 'dark'; setSetting('theme', dark ? 'light' : 'dark'); paint(); });
+  themeBtn.addEventListener('click', () => { const dark = document.documentElement.dataset.theme === 'dark'; if (dark) setSetting('palette', settings.prevPalette && settings.prevPalette !== 'night' ? settings.prevPalette : 'brown'); else { settings.prevPalette = settings.palette; setSetting('palette', 'night'); } paint(); });
   paint();
   $('#settings-btn').replaceChildren(icon('settings', 20));
   $('#search-icon').replaceChildren(icon('search', 18));
