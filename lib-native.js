@@ -5,7 +5,9 @@ import { placeKey } from './lib-prayer.js';
 import { daySeed, dayKey, pad2 } from './lib-util.js';
 
 export const hasNative = () => typeof window.NoorNative !== 'undefined' && !!window.NoorNative;
-export const REM_DEFAULTS = { on: false, prayers: { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true }, salMin: 5, salFrom: 6, salTo: 23, speak: true, adhkar: true, morningAt: '05:30', eveningAt: '17:30', quran: false, quranAt: '21:00', ayah: true, ayahAt: '08:00' };
+export const REM_DEFAULTS = { v: 2, on: true, prayers: { Fajr: true, Dhuhr: true, Asr: true, Maghrib: true, Isha: true }, salMin: 5, salFrom: 6, salTo: 23, speak: true, adhkar: true, morningAt: '05:30', eveningAt: '17:30', quran: true, quranAt: '21:00', ayah: true, ayahAt: '08:00' };
+// الترحيل لمرة واحدة: كل التنبيهات مفعّلة افتراضياً (v2)
+if (!settings.rem || settings.rem.v !== 2) { try { setSetting('rem', { ...REM_DEFAULTS }); } catch { /* ignore */ } }
 export const getRem = () => ({ ...REM_DEFAULTS, ...(settings.rem || {}), prayers: { ...REM_DEFAULTS.prayers, ...((settings.rem || {}).prayers || {}) } });
 export const setRem = (patch) => { setSetting('rem', { ...getRem(), ...patch }); syncNative(); };
 export const nativeStatus = () => { try { return JSON.parse(window.NoorNative.status()); } catch { return { notif: false, exact: false }; } };
