@@ -3,7 +3,7 @@
 // - بيانات الـ API: stale-while-revalidate لطلبات GET فقط (القرآن/الأحاديث/الأذكار/المواقيت).
 // - الصوت لا يُخزَّن (طلبات Range وحقوق الاستخدام).
 // - عند فشل التنقل: صفحة offline.html.
-const VERSION = 'v8';
+const VERSION = 'v9';
 const SHELL = `noor-shell-${VERSION}`;
 const DATA = `noor-data-${VERSION}`;
 const FONTS = `noor-fonts-${VERSION}`;
@@ -34,6 +34,7 @@ const SHELL_FILES = [
   'lib-native.js',
   'data-seerah.js',
   'data-faq.js',
+  'data-evening.js',
   'page-faq.js',
   'data-qisas.js',
   'page-seerah.js',

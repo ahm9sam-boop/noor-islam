@@ -6,6 +6,7 @@
 // - المواقيت والتقويم: AlAdhan
 import { idb } from './lib-store.js';
 import { normAr } from './lib-util.js';
+import { EVENING_TEXT, MORNING_ONLY, EVENING_ONLY } from './data-evening.js';
 
 export const Q = 'https://api.alquran.cloud/v1';
 export const A = 'https://api.aladhan.com/v1';
@@ -257,8 +258,18 @@ export const adhkarData = () => cached('adhkar', async () => {
       items: c.array.filter((x) => x && typeof x.text === 'string' && x.text.trim())
         .map((x) => ({ id: x.id, text: x.text.trim(), count: Math.max(1, parseInt(x.count, 10) || 1) }))
     }))
-    .filter((c) => c.items.length);
+    .filter((c) => c.items.length)
+    .flatMap(splitAmMasa);
 });
+
+/** يفصل «أذكار الصباح والمساء» إلى قسمين: الصباح والمساء (لفظ المساء من نص المصدر). */
+function splitAmMasa(c) {
+  if (!/الصباح والمساء/.test(c.category)) return [c];
+  const clean = (t) => t.replace(/\s*\[[^\]]*\]\s*/g, ' ').replace(/\s+/g, ' ').trim();
+  const am = { id: c.id, category: 'أذكار الصباح', items: c.items.filter((x) => !EVENING_ONLY.includes(x.id)).map((x) => ({ ...x, text: clean(x.text) })) };
+  const pm = { id: 'm' + c.id, category: 'أذكار المساء', items: c.items.filter((x) => !MORNING_ONLY.includes(x.id)).map((x) => ({ ...x, text: EVENING_TEXT[x.id] || clean(x.text) })) };
+  return [am, pm];
+}
 
 /* ===================== أسماء الله الحسنى ===================== */
 export const namesData = () => cached('names', async () => {
