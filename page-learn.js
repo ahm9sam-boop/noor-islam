@@ -7,8 +7,10 @@ import { hadithCard } from './page-hadith.js';
 /* نصوص الآيات والأحاديث تُجلب من المصادر وتُتحقق (الأحاديث بعبارة مفتاحية)، أما الشرح فعبارات عامة موسومة «معلومات عامة». */
 const PAGES = [
   ['pillars', 'أركان الإسلام'], ['iman', 'أركان الإيمان'], ['wudu', 'الوضوء'], ['prayer', 'الصلاة (مختصر عام)'],
-  ['fasting', 'أحكام الصيام الأساسية'], ['prophets', 'قصص الأنبياء في القرآن'], ['seerah', 'السيرة النبوية'], ['qa', 'أسئلة وأجوبة']
+  ['fasting', 'أحكام الصيام الأساسية'], ['prophets', 'مواضع قصص الأنبياء في المصحف'], ['qa', 'أسئلة وأجوبة']
 ];
+const TOP = { pillars: 'pillars', iman: 'iman', wudu: 'wudu', salah: 'prayer', fasting: 'fasting', qa: 'qa' };
+const HREF = { pillars: '#/pillars', iman: '#/iman', wudu: '#/wudu', prayer: '#/salah', fasting: '#/fasting', qa: '#/qa', prophets: '#/qisas', seerah: '#/seerah' };
 
 async function verse(ref) {
   try {
@@ -66,11 +68,11 @@ const BUILD = {
   }
 };
 
-export async function render({ params }) {
-  const slug = params[0];
+export async function render({ name, params }) {
+  const slug = TOP[name] || params[0];
   if (!slug) {
     return h('div', null, pageHeader('تعلّم', 'مواد تعريفية مع التمييز بين النص الشرعي والمعلومات العامة'),
-      h('div', { class: 'grid wide' }, ...PAGES.map(([k, t]) => h('a', { class: 'surah-item', href: `#/learn/${k}` }, icon('learn', 24), h('div', { class: 'surah-name' }, t)))));
+      h('div', { class: 'grid wide' }, ...PAGES.map(([k, t]) => h('a', { class: 'surah-item', href: HREF[k] || `#/learn/${k}` }, icon('learn', 24), h('div', { class: 'surah-name' }, t)))));
   }
   const title = PAGES.find((p) => p[0] === slug)?.[1];
   if (!title || !BUILD[slug]) return errorBox('الصفحة غير موجودة.');

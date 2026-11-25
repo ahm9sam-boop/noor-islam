@@ -193,3 +193,5 @@ table.t { width: 100%; border-collapse: collapse; background: var(--surface); bo
 .swatch { width: 2.6rem; height: 2.6rem; border-radius: 50%; border: 3px solid var(--line); cursor: pointer; padding: 0; }
 .swatch[aria-pressed='true'] { border-color: var(--ink); box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--gold); }
 .swatch[data-k='brown'] { background: #6b3f23; } .swatch[data-k='green'] { background: #0f4c3a; } .swatch[data-k='blue'] { background: #14407a; } .swatch[data-k='purple'] { background: #4a2a73; } .swatch[data-k='night'] { background: #0a1020; }
+
+.prose{font-size:1.08rem;line-height:2;margin:.6rem 0}
