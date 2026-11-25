@@ -112,3 +112,4 @@ buildNav(); buildHeader();
 addEventListener('hashchange', route);
 route();
 void settings;
+setTimeout(() => import('./lib-native.js').then((m) => m.syncNative()).catch(() => {}), 3000);

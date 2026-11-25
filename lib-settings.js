@@ -16,7 +16,8 @@ const DEFAULTS = {
   school: 0,                // 0 شافعي/جمهور، 1 حنفي
   place: null,              // {label, city, country, lat, lng}
   saveReading: null,        // null = لم يُسأل بعد، true/false = موافقة المستخدم
-  notify: false
+  notify: false,
+  rem: null                 // إعدادات التذكيرات (تطبيق أندرويد)
 };
 
 export const settings = { ...DEFAULTS, ...(ls.get('settings', {}) || {}) };
@@ -32,6 +33,8 @@ export function applySettings() {
   r.style.setProperty('--qfs', `${settings.qSize}px`);
   r.style.setProperty('--qfont', `'${settings.qFont}', 'Amiri Quran', 'Scheherazade New', serif`);
   const meta = document.querySelector('meta[name="theme-color"]');
+  const bar = { brown: '#4a2a15', green: '#0a3a2c', blue: '#0c2a52', purple: '#341b55', night: '#08122a' }[pal];
+  try { window.NoorNative?.setBarColor(bar); } catch { /* ignore */ }
   if (meta) meta.content = { brown: '#6b3f23', green: '#0f4c3a', blue: '#14407a', purple: '#4a2a73', night: '#0a1020' }[pal];
 }
 
